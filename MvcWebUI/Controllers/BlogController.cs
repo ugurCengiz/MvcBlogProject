@@ -4,14 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MvcWebUI.Controllers
 {
-    public class CategoryController : Controller
+    public class BlogController : Controller
     {
-        CategoryManager cm = new CategoryManager(new EfCategoryRepository());
-
+        BlogManager bm = new BlogManager(new EfBlogRepository());
+         
         public IActionResult Index()
         {
-            var values = cm.GetList();
+            var values = bm.GetBlogListWithCategory();
             return View(values);
+
         }
     }
 }
