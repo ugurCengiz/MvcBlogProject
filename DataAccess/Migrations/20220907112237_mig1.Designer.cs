@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220830123910_mig1")]
+    [Migration("20220907112237_mig1")]
     partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,7 +76,12 @@ namespace DataAccess.Migrations
                     b.Property<string>("BlogTitle")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("BlogId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Blogs");
                 });
@@ -109,6 +114,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CommentContent")
                         .HasColumnType("nvarchar(max)");
 
@@ -125,6 +133,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CommentId");
+
+                    b.HasIndex("BlogId");
 
                     b.ToTable("Comments");
                 });
@@ -187,6 +197,38 @@ namespace DataAccess.Migrations
                     b.HasKey("WriterId");
 
                     b.ToTable("Writers");
+                });
+
+            modelBuilder.Entity("Entity.Concrete.Blog", b =>
+                {
+                    b.HasOne("Entity.Concrete.Category", "Category")
+                        .WithMany("Blogs")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Entity.Concrete.Comment", b =>
+                {
+                    b.HasOne("Entity.Concrete.Blog", "Blog")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
+            modelBuilder.Entity("Entity.Concrete.Blog", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Entity.Concrete.Category", b =>
+                {
+                    b.Navigation("Blogs");
                 });
 #pragma warning restore 612, 618
         }

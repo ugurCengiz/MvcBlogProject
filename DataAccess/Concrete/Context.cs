@@ -12,7 +12,7 @@ namespace DataAccess.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=(localdb)\\MSSQLLocalDB;database=CoreBlogDb; integrated security=true");
+            optionsBuilder.UseSqlServer("server=DESKTOP-Q3JJ92I\\MSSQLSERVER01;database=CoreBlogDb; integrated security=true");
         }
 
         public DbSet<About> Abouts { get; set; }
