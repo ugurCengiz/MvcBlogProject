@@ -1,19 +1,11 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Newtonsoft.Json.Serialization;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MvcWebUI
 {
@@ -31,7 +23,7 @@ namespace MvcWebUI
         {
             services.AddControllersWithViews();
          
-
+             services.AddSession();
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -39,14 +31,18 @@ namespace MvcWebUI
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            
 
             services.AddMvc();
+           
             services.AddAuthentication(
                     CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(x =>
                 {
                     x.LoginPath = "/Login/Index";
                 });
+
+          
 
         }
 

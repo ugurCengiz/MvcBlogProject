@@ -52,12 +52,15 @@ namespace Business.Concrete
         {
             return _blogDal.GetListAll(x => x.BlogId == id);
         }
-
-
-
+		
 		public List<Blog> GetList()
 		{
 			return _blogDal.GetListAll();
 		}
+
+        public List<Blog> GetLast3Blog()
+        {
+            return _blogDal.GetListAll().Take(3).ToList();
+        }
 	}
 }
