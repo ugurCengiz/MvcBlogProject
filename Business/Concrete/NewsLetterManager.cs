@@ -18,9 +18,27 @@ namespace Business.Concrete
             _newsLetterDal = newsLetterDal;
         }
 
-        public void AddNewsLetter(NewsLetter newsLetter)
+
+        public void Add(NewsLetter entity)
         {
-           _newsLetterDal.Insert(newsLetter);
+            _newsLetterDal.Insert(entity);
+        }
+
+        public void Update(NewsLetter entity)
+        {
+            throw new NotImplementedException();
+        }
+        public void Delete(NewsLetter entity)
+        {
+            throw new NotImplementedException();
+        }
+        public NewsLetter GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public List<NewsLetter> GetList()
+        {
+            throw new NotImplementedException();
         }
     }
 }

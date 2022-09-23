@@ -7,8 +7,8 @@ using Entity.Concrete;
 
 namespace Business.Abstract
 {
-    public interface IContactService
+    public interface IContactService:IGenericService<Contact>
     {
-        void ContactAdd(Contact contact);
+        
     }
 }

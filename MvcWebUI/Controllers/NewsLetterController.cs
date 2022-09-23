@@ -20,7 +20,7 @@ namespace MvcWebUI.Controllers
         public IActionResult SubscribeMail(NewsLetter newsLetter)
         {
             newsLetter.MailStatus = true;
-            newsLetterManager.AddNewsLetter(newsLetter);
+            newsLetterManager.Add(newsLetter);
             return PartialView();
         }
     }

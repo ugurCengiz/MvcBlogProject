@@ -21,7 +21,7 @@ namespace MvcWebUI.Controllers
         {
             contact.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             contact.ContactStatus = true;
-            contactManager.ContactAdd(contact);
+            contactManager.Add(contact);
 
             return RedirectToAction("Index","Blog");
         }

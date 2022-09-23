@@ -18,9 +18,27 @@ namespace Business.Concrete
             _contactDal = contactDal;
         }
 
-        public void ContactAdd(Contact contact)
-        { 
-            _contactDal.Insert(contact);
+
+        public void Add(Contact entity)
+        {
+            _contactDal.Insert(entity);
+        }
+
+        public void Update(Contact entity)
+        {
+            throw new NotImplementedException();
+        }
+        public void Delete(Contact entity)
+        {
+            throw new NotImplementedException();
+        }
+        public Contact GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public List<Contact> GetList()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace MvcWebUI.Controllers
             comment.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             comment.CommentStatus = true;
             comment.BlogId = 2;
-            commentManager.CommentAdd(comment);
+            commentManager.Add(comment);
             return PartialView();
         }
 

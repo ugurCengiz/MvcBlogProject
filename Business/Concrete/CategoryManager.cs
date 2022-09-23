@@ -19,19 +19,14 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
-        public void CategoryAdd(Category category)
+        public void Add(Category entity)
         {
-            _categoryDal.Insert(category);
+           _categoryDal.Insert(entity);
         }
-
-        public void CategoryDelete(Category category)
+        
+        public void Delete(Category entity)
         {
-            _categoryDal.Delete(category);
-        }
-
-        public void CategoryUpdate(Category category)
-        {
-            _categoryDal.Update(category);
+            _categoryDal.Delete(entity);
         }
 
         public Category GetById(int id)
@@ -42,6 +37,11 @@ namespace Business.Concrete
         public List<Category> GetList()
         {
             return _categoryDal.GetListAll();
+        }
+
+        public void Update(Category entity)
+        {
+           _categoryDal.Update(entity);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace MvcWebUI.Controllers
             {
                 writer.WriterStatus = true;
                 writer.WriterAbout = "Deneme Test";
-                writerManager.WriterAdd(writer);
+                writerManager.Add(writer);
                 return RedirectToAction("Index", "Blog");
             }
             else

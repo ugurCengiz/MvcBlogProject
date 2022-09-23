@@ -18,35 +18,40 @@ namespace Business.Concrete
 			_blogDal = blogDal;
 		}
 
-		public void BlogAdd(Blog blog)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void BlogDelete(Blog blog)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void BlogUpdate(Blog blog)
-		{
-			throw new NotImplementedException();
-		}
-
-		public List<Blog> GetBlogListWithCategory()
+        public List<Blog> GetBlogListWithCategory()
 		{
 			return _blogDal.GetListWithCategory();
 		}
+
+        public List<Blog> GetListWithCategoryByWriterBm(int id)
+        {
+            return _blogDal.GetListWithCategoryByWriter(id);
+        }
 
         public List<Blog> GetBlogListByWriter(int id)
         {
             return _blogDal.GetListAll(x => x.WriterId == id);
         }
 
+        public void Add(Blog entity)
+        {
+          _blogDal.Insert(entity);
+        }
+
+        public void Update(Blog entity)
+        {
+            _blogDal.Update(entity);
+        }
+
+        public void Delete(Blog entity)
+        {
+           _blogDal.Delete(entity);
+        }
+
         public Blog GetById(int id)
-		{
-			throw new NotImplementedException();
-		}
+        {
+           return _blogDal.GetById(id);
+        }
 
         public List<Blog> GetBlogById(int id)
         {
