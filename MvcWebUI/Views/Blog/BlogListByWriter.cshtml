@@ -25,7 +25,7 @@
                 <td>@item.BlogTitle</td>
                 <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.Category.CategoryName</td>
-                <td><a href="#" class="btn btn-warning">Düzenle</a></td>
+                <td><a href="/Blog/EditBlog/@item.BlogId" class="btn btn-warning">Düzenle</a></td>
                 <td><a href="/Blog/DeleteBlog/@item.BlogId" onclick="return confirm('Silmek istediğinize emin misiniz ?');" class="btn btn-danger">Sil</a></td>
                 <td>
                     @if (item.BlogStatus)

@@ -16,7 +16,8 @@ namespace MvcWebUI.Controllers
     public class BlogController : Controller
     {
         BlogManager blogManager = new BlogManager(new EfBlogRepository());
-         
+        BlogValidator blogValidator = new BlogValidator();
+
         public IActionResult Index()
         {
             var values = blogManager.GetBlogListWithCategory();
@@ -54,7 +55,7 @@ namespace MvcWebUI.Controllers
         [HttpPost]
         public IActionResult BlogAdd(Blog blog)
         {
-            BlogValidator blogValidator = new BlogValidator();
+           
             ValidationResult results = blogValidator.Validate(blog);
             
             if (results.IsValid)
@@ -80,6 +81,30 @@ namespace MvcWebUI.Controllers
         {
             var blogValue = blogManager.GetById(id);
             blogManager.Delete(blogValue);
+            return RedirectToAction("BlogListByWriter");
+        }
+
+        [HttpGet]
+        public IActionResult EditBlog(int id)
+        {
+            var blogValue = blogManager.GetById(id);
+            CategoryManager categoryManager = new CategoryManager(new EfCategoryRepository());
+            List<SelectListItem> categoryValues = (from x in categoryManager.GetList()
+                select new SelectListItem
+                {
+                    Text = x.CategoryName,
+                    Value = x.CategoryId.ToString()
+                }).ToList();
+            ViewBag.categoryValues = categoryValues;
+            return View(blogValue);
+        }
+
+        [HttpPost]
+        public IActionResult EditBlog(Blog blog)
+        {
+            blog.WriterId = 1;
+            blog.BlogStatus = true;
+            blogManager.Update(blog);
             return RedirectToAction("BlogListByWriter");
         }
 
