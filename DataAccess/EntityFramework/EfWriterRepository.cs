@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EntityFramework
 {
-    public class EfWriterDal: GenericRepository<Writer>, IWriterDal
+    public class EfWriterRepository: GenericRepository<Writer>, IWriterDal
     {
+
 
     }
 }

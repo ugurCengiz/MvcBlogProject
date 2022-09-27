@@ -11,7 +11,7 @@ namespace MvcWebUI.Controllers
     [AllowAnonymous]
     public class RegisterController : Controller
     {
-        private WriterManager writerManager = new WriterManager(new EfWriterDal());
+        private WriterManager writerManager = new WriterManager(new EfWriterRepository());
 
         [HttpGet]
         public IActionResult Index()
