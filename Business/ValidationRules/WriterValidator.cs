@@ -13,8 +13,7 @@ namespace Business.ValidationRules
         public WriterValidator()
         {
             RuleFor(x => x.WriterName).NotEmpty().WithMessage("Yazar adı soyadı boş geçilemez");
-            RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Mail adresi boş geçilemez");
-            RuleFor(x => x.WriterPassword).NotEmpty().WithMessage("Şifre boş geçilemez");
+            RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Mail adresi boş geçilemez");           
             RuleFor(x => x.WriterName).MinimumLength(2).WithMessage("Minimum en az 2 karakter girişi yapın");
             RuleFor(x => x.WriterName).MaximumLength(50).WithMessage("Minimum en fazla 50 karakterlik veri girişi yapın");
             RuleFor(p => p.WriterPassword).Matches(@"[A-Z]+").WithMessage("Sifre en azı bir büyük harfden ibaret olmalıdır.");
