@@ -10,8 +10,7 @@ namespace MvcWebUI.Controllers
     public class DashboardController : Controller
     {
         private BlogManager blogManager = new BlogManager(new EfBlogRepository());
-
-        [AllowAnonymous]
+        
         public IActionResult Index()
         {
             Context context = new Context();

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Business.Concrete;
 using Business.ValidationRules;
+using DataAccess.Concrete;
 using DataAccess.EntityFramework;
 using Entity.Concrete;
 using FluentValidation.Results;
@@ -15,8 +17,14 @@ namespace MvcWebUI.Controllers
     {
         private WriterManager writerManager = new WriterManager(new EfWriterRepository());
 
+        [Authorize]
         public IActionResult Index()
         {
+            var userMail = User.Identity.Name;
+            ViewBag.UserMail = userMail;
+            Context context = new Context();
+            var writerName = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.UserName = writerName;
             return View();
         }
 
@@ -46,14 +54,17 @@ namespace MvcWebUI.Controllers
             return PartialView();
         }
 
-        [AllowAnonymous]
+
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var writerValues = writerManager.GetById(1);
+            Context context = new Context();
+            var userMail = User.Identity.Name;
+            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
+            var writerValues = writerManager.GetById(writerId);
             return View(writerValues);
         }
-        [AllowAnonymous]
+
         [HttpPost]
         public IActionResult WriterEditProfile(Writer writer)
         {
@@ -62,14 +73,14 @@ namespace MvcWebUI.Controllers
             if (results.IsValid)
             {
                 writerManager.Update(writer);
-                return RedirectToAction("Index","Dashboard");
+                return RedirectToAction("Index", "Dashboard");
             }
             else
             {
                 foreach (var item in results.Errors)
                 {
-                    ModelState.AddModelError(item.PropertyName,item.ErrorMessage);
-                } 
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
             }
 
             return View();
@@ -99,12 +110,12 @@ namespace MvcWebUI.Controllers
             }
 
             writer.WriterMail = addProfileImage.WriterMail;
-            writer.WriterName=addProfileImage.WriterName;
-            writer.WriterPassword=addProfileImage.WriterPassword;
+            writer.WriterName = addProfileImage.WriterName;
+            writer.WriterPassword = addProfileImage.WriterPassword;
             writer.WriterStatus = true;
-            writer.WriterAbout=addProfileImage.WriterAbout;
-           writerManager.Add(writer);
-           return RedirectToAction("Index", "Dashboard");
+            writer.WriterAbout = addProfileImage.WriterAbout;
+            writerManager.Add(writer);
+            return RedirectToAction("Index", "Dashboard");
         }
 
     }

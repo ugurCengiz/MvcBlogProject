@@ -6,12 +6,11 @@ namespace MvcWebUI.ViewComponents.Writer
 {
     public class WriterMessageNotification: ViewComponent
     {
-        private MessageManager messageManager = new MessageManager(new EfMessageRepository());
+        private Message2Manager message2Manager = new Message2Manager(new EfMessage2Repository());
         public IViewComponentResult Invoke()
         {
-            string p;
-            p = "ugurcengiz1@gmail.com";
-            var values = messageManager.GetInBoxListByWriter(p);
+            int id = 2;
+            var values = message2Manager.GetInBoxListByWriter(id);
             return View(values);
         }
     }
