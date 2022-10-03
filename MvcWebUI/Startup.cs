@@ -22,8 +22,8 @@ namespace MvcWebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-         
-             services.AddSession();
+
+            services.AddSession();
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -31,10 +31,10 @@ namespace MvcWebUI
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
-            
+
 
             services.AddMvc();
-           
+
             services.AddAuthentication(
                     CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(x =>
@@ -42,7 +42,7 @@ namespace MvcWebUI
                     x.LoginPath = "/Login/Index";
                 });
 
-          
+
 
         }
 
@@ -74,6 +74,17 @@ namespace MvcWebUI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "/admin/{controller=Home}/{action=Index}/{id?}"
+
+                // endpoints.MapControllerRoute(
+                //name: "areas",
+                //pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -81,3 +92,4 @@ namespace MvcWebUI
         }
     }
 }
+
