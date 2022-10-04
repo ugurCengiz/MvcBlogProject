@@ -3,23 +3,31 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<h1>Yazar Ajax İşlemleri</h1>
+<h1 style="color: cadetblue" >Yazar Ajax İşlemleri</h1>
 <br />
-<button type="button" id="btngetlist" class="btn btn-outline-primary">Yazar Listesi</button>
-<button type="button" id="btngetbydid" class="btn btn-outline-success">Yazar Getir</button>
+<br />
+<div class="row">
+    <div class="col-md-6">
+        
+        <button type="button" id="btngetbydid" class="btn btn-outline-success" style="">Yazar Getir</button>
+        <br/>
+        <br/>
+        <input type="text" id="writerId" placeholder="Yazar Id Değerini Giriniz." class="form-control" />
+        <br/>
+        <div id="writerget" class="col-md-6">
 
-<br />
-<br/>
-<div>
-    <input type="text" id="writerId" placeholder="Yazar Id Değerini Giriniz." class="form-control" />
-</div>
-<br/>
-<div id="writerget">
-    Buraya 1 yazar gelecek
-</div>
-<br />
-<div id="writerlist">
-    Buraya yazarlar gelecek
+            <h1>Buraya 1 yazar gelecek</h1>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-6">
+        <button type="button" id="btngetlist" class="btn btn-outline-primary">Yazar Listesi</button>
+        <br/>
+        <br/>
+        <div id="writerlist" class="col-md-6">
+            <h1> Buraya yazarlar gelecek</h1>
+        </div>
+    </div>
 </div>
 @section scripts{
 
@@ -31,35 +39,35 @@
                 type: "Get",
                 url: "/Admin/Writer/WriterList/",
                 success: function (func) {
-                    let w=jQuery.parseJSON(func)
+                    let w = jQuery.parseJSON(func)
                     console.log(w);
-                    let tablehtml="<table class=table table-bordered> <tr><th> Yazar ID </th> <th> Yazar Adı </th>  </tr>";
-                    $.each(w,(index,value) => {
-                        tablehtml+= `<tr><td>${value.Id}</td><td>${value.Name}</td></tr>`
+                    let tablehtml = "<table class=table table-bordered> <tr><th> Yazar ID </th> <th> Yazar Adı </th>  </tr>";
+                    $.each(w, (index, value) => {
+                        tablehtml += `<tr><th>${value.Id}</hd><td>${value.Name}</td></tr>`
 
                     });
-                    tablehtml +="</table>";
+                    tablehtml += "</table>";
                     $("#writerlist").html(tablehtml);
                 }
             });
         });
 
         $("#btngetbydid").click(x => {
-            let id=$("#writerId").val();
+            let id = $("#writerId").val();
             $.ajax({
                 contentType: "application/json",
-                dataType : "json",
+                dataType: "json",
                 type: "get",
                 url: "/Admin/Writer/GetWriterById/",
-                data: { writerId: id},
-                success: function(func) {
-                    let w=jQuery.parseJSON(func);
+                data: { writerId: id },
+                success: function (func) {
+                    let w = jQuery.parseJSON(func);
                     console.log(w);
 
-                    let getValue= `<table class=table table-bordered> <tr> <td> Yazar Id </th> <th> Yazar Adı </th> </tr> <tr> <td>${w.Id} </td> <td>${w.Name}</td> </tr></table>`;
+                    let getValue = `<table class=table table-bordered> <tr> <td> Yazar Id </th> <th> Yazar Adı </th> </tr> <tr> <th>${w.Id} </th> <td>${w.Name}</td> </tr></table>`;
                     $("#writerget").html(getValue);
                 }
-            });            
+            });
         });
     </script>
 }
