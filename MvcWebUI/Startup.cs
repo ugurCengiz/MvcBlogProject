@@ -1,3 +1,5 @@
+using DataAccess.Concrete;
+using Entity.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -31,8 +33,15 @@ namespace MvcWebUI
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            services.AddDbContext<Context>();
+            services.AddIdentity<AppUser, AppRole>(x =>
+            {
+                x.Password.RequireUppercase = false;
+                x.Password.RequireNonAlphanumeric = false;
 
 
+
+            }).AddEntityFrameworkStores<Context>();
             services.AddMvc();
 
             services.AddAuthentication(

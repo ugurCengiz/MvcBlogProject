@@ -1,0 +1,20 @@
+﻿@using MvcWebUI.Controllers
+@using DocumentFormat.OpenXml.Office2019.Presentation
+@model MvcWebUI.Controllers.Class1
+@{
+    ViewData["Title"] = "EditEmployee";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Personel Güncelleme</h1>
+
+<form method="post">
+    <label>Id</label>
+   @Html.TextBoxFor(x=>x.Id,new {@class="form-control"})
+   <br/>
+    <label>Personel</label>
+    @Html.TextBoxFor(x=>x.Name,new {@class="form-control"})
+   <br />
+   <button class="btn btn-outline-success" style="float: right">Güncelle</button>
+</form>
+

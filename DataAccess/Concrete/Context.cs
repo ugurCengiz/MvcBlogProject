@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DataAccess.Concrete
 {
-    public class Context:DbContext
+    public class Context:IdentityDbContext<AppUser,AppRole,int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +29,7 @@ namespace DataAccess.Concrete
                 .HasForeignKey(z => z.GuestTeamId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
            
+            base.OnModelCreating(modelBuilder);
             //HomeMatches--> WriterSender
             //AwayMatches--> WriterReceiver
 

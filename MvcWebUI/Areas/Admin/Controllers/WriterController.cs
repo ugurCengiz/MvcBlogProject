@@ -27,6 +27,32 @@ namespace MvcWebUI.Areas.Admin.Controllers
             return Json(jsonWriters);
         }
 
+        [HttpPost]
+        public IActionResult AddWriter(WriterClass writerClass)
+        {
+            writers.Add(writerClass);
+            var jsonWriters = JsonConvert.SerializeObject(writerClass);
+            return Json(jsonWriters);
+        }
+
+        public IActionResult DeleteWriter(int id)
+        {
+            var writer = writers.FirstOrDefault(x => x.Id == id);
+            writers.Remove(writer);
+            return Json(writer);
+        }
+
+        public IActionResult UpdateWriter(WriterClass writerClass)
+        {
+            var writer = writers.FirstOrDefault(x => x.Id == writerClass.Id);
+            writer.Name = writerClass.Name;
+            var jsonWriter = JsonConvert.SerializeObject(writerClass);
+            return Json(jsonWriter);
+
+
+        }
+
+
         public static List<WriterClass> writers = new List<WriterClass>()
         {
             new WriterClass
