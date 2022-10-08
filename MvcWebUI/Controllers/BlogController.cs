@@ -20,6 +20,7 @@ namespace MvcWebUI.Controllers
         BlogValidator blogValidator = new BlogValidator();
         private Context context = new Context();
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var values = blogManager.GetBlogListWithCategory();
@@ -27,6 +28,7 @@ namespace MvcWebUI.Controllers
 
         }
 
+        [AllowAnonymous]
         public IActionResult BlogReadAll(int id)
         {
             ViewBag.i = id;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Business.Concrete;
 using Business.ValidationRules;
 using DataAccess.Concrete;
@@ -8,6 +9,7 @@ using DataAccess.EntityFramework;
 using Entity.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MvcWebUI.Models;
 
@@ -16,6 +18,13 @@ namespace MvcWebUI.Controllers
     public class WriterController : Controller
     {
         private WriterManager writerManager = new WriterManager(new EfWriterRepository());
+        private readonly UserManager<AppUser> _userManager;
+        
+
+        public WriterController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
 
         [Authorize]
         public IActionResult Index()
@@ -56,34 +65,28 @@ namespace MvcWebUI.Controllers
 
 
         [HttpGet]
-        public IActionResult WriterEditProfile()
+        public async Task<IActionResult> WriterEditProfile()
         {
-            Context context = new Context();
-            var userMail = User.Identity.Name;
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
-            var writerValues = writerManager.GetById(writerId);
-            return View(writerValues);
+            var values= await _userManager.FindByNameAsync(User.Identity.Name);
+            UserUpdateViewModel model = new UserUpdateViewModel();
+            model.Mail = values.Email;
+            model.NameSurname = values.NameSurName;
+            model.ImageUrl = values.ImageUrl;
+            model.UserName = values.UserName;
+            return View(model);
+
+
         }
 
         [HttpPost]
-        public IActionResult WriterEditProfile(Writer writer)
+        public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel model)
         {
-            WriterValidator writerValidator = new WriterValidator();
-            ValidationResult results = writerValidator.Validate(writer);
-            if (results.IsValid)
-            {
-                writerManager.Update(writer);
-                return RedirectToAction("Index", "Dashboard");
-            }
-            else
-            {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
-            }
-
-            return View();
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            values.NameSurName = model.NameSurname;
+            values.ImageUrl = model.ImageUrl;
+            values.Email = model.Mail;
+            var result = await _userManager.UpdateAsync(values);
+            return RedirectToAction("Index", "Dashboard");
 
         }
 

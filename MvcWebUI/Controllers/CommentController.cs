@@ -2,10 +2,12 @@
 using Business.Concrete;
 using DataAccess.EntityFramework;
 using Entity.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MvcWebUI.Controllers
 {
+    [AllowAnonymous]
     public class CommentController : Controller
     {
         CommentManager commentManager = new CommentManager(new EfCommentRepository());
@@ -26,7 +28,7 @@ namespace MvcWebUI.Controllers
         {
             comment.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             comment.CommentStatus = true;
-            comment.BlogId = 2;
+            comment.BlogId = 4;
             commentManager.Add(comment);
             return PartialView();
         }
