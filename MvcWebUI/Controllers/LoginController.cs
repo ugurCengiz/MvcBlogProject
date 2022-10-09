@@ -50,33 +50,11 @@ namespace MvcWebUI.Controllers
 
         }
 
-
-
-        //    [HttpPost]
-        //    public async Task<IActionResult> Index(Writer writer)
-        //    {
-        //        Context context = new Context();
-        //        var dataValue =
-        //            context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
-        //        if (dataValue != null)
-        //        {
-        //            var claims = new List<Claim>()
-        //            {
-        //                new Claim(ClaimTypes.Name, writer.WriterMail)
-        //            };
-        //            var userIdentity = new ClaimsIdentity(claims, "a");
-        //            ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-        //            await HttpContext.SignInAsync(principal);
-        //            return RedirectToAction("Index", "Dashboard");
-        //        }
-        //        else
-        //        {
-        //            return View();
-        //        }
-
-        //    }
-        //}
-        
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Login");
+        }
     }
 
 }

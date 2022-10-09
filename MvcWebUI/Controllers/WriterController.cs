@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogApiDemo.DataAccess;
 using Business.Concrete;
 using Business.ValidationRules;
 using DataAccess.Concrete;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MvcWebUI.Models;
+using Context = DataAccess.Concrete.Context;
 
 namespace MvcWebUI.Controllers
 {
@@ -19,6 +21,7 @@ namespace MvcWebUI.Controllers
     {
         private WriterManager writerManager = new WriterManager(new EfWriterRepository());
         private readonly UserManager<AppUser> _userManager;
+        
         
 
         public WriterController(UserManager<AppUser> userManager)
@@ -53,8 +56,9 @@ namespace MvcWebUI.Controllers
             return View();
         }
         [AllowAnonymous]
-        public PartialViewResult WriterNavbarPartial()
-        {
+        public  PartialViewResult WriterNavbarPartial()
+        {          
+            
             return PartialView();
         }
         [AllowAnonymous]
@@ -85,6 +89,7 @@ namespace MvcWebUI.Controllers
             values.NameSurName = model.NameSurname;
             values.ImageUrl = model.ImageUrl;
             values.Email = model.Mail;
+            values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, model.Password);
             var result = await _userManager.UpdateAsync(values);
             return RedirectToAction("Index", "Dashboard");
 
@@ -121,5 +126,7 @@ namespace MvcWebUI.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+
+       
     }
 }

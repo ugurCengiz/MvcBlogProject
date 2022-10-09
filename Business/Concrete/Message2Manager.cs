@@ -45,7 +45,12 @@ namespace Business.Concrete
 
         public List<Message2> GetInBoxListByWriter(int id)
         {
-            return _message2Dal.GetListWithMessageByWriter(id);
+            return _message2Dal.GetInBoxWithMessageByWriter(id);
+        }
+
+        public List<Message2> GetSendBoxListByWriter(int id)
+        {
+            return _message2Dal.GetSendBoxWithMessageByWriter(id);
         }
     }
 }

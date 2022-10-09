@@ -1,32 +1,32 @@
 ﻿@using Entity.Concrete
 @model List<Message2>
 @{
-    ViewData["Title"] = "InBox";
+    ViewData["Title"] = "SendBox";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<h1>Gelen Kutusu</h1>
-<a href="/Message/SendMessage/" class="btn btn-facebook" >Yeni Mesaj Oluştur</a>
+<h1>Gönderilen Mesajlar</h1>
+<a href="/Message/SendMessage/" class="btn btn-facebook">Yeni Mesaj Oluştur</a>
 
 <table class="table table-bordered">
     <tr>
         <th>#</th>
         <th>Konu</th>
-        <th>Gönderen</th>
+        <th>Alıcı</th>
         <th>Tarih</th>
         <th>Mesajı Aç</th>
-        
+
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <th>@item.MessageId</th>
             <td>@item.Subject</td>
-            <td>@item.SenderUser.WriterName</td>
+            <td>@item.ReceiverUser.WriterName</td>
             <td>@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
             <td><a href="/Message/MessageDetails/@item.MessageId" class="btn btn-warning">Oku</a></td>
-            
-            
+
+
 
         </tr>
     }

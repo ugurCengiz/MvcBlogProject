@@ -1,4 +1,6 @@
-﻿@{
+﻿@*@model List<System.Security.Claims.Claim>*@
+
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
@@ -57,6 +59,24 @@
 @await  Component.InvokeAsync("BlogListDashboard")
 @await  Component.InvokeAsync("WriterAboutOnDashboard")
 @await  Component.InvokeAsync("CategoryListDashboard")
+@*
+<table class="table table-bordered">
+    <tr>
+            <th>Issuer</th>
+            <th>Value</th>
+            <th>Type</th>
+            <th>ValueType</th>
+    </tr>
+    @foreach (var item in Model)
+   {
+    <tr>
+        <td>@item.Issuer</td>
+             <td>@item.Value</td>
+                <td>@item.Type</td>
+                <td>@item.ValueType</td>
+    </tr>   
+   }
+</table>*@
 
 </body>
 </html>

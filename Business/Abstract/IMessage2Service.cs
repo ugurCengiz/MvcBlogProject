@@ -10,6 +10,7 @@ namespace Business.Abstract
     public interface IMessage2Service :IGenericService<Message2>
     {
         public List<Message2> GetInBoxListByWriter(int id);
+        public List<Message2> GetSendBoxListByWriter(int id);
 
     }
 }

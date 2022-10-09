@@ -38,8 +38,9 @@ namespace MvcWebUI.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var userMail = User.Identity.Name;
-            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
+            var userName = User.Identity.Name;            
+            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
+            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();           
             var values= blogManager.GetListWithCategoryByWriterBm(writerId);
             return View(values);
         }
@@ -61,15 +62,16 @@ namespace MvcWebUI.Controllers
         [HttpPost]
         public IActionResult BlogAdd(Blog blog)
         {
-           
+            var userName = User.Identity.Name;
+            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
+            var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
+
             ValidationResult results = blogValidator.Validate(blog);
             
             if (results.IsValid)
             {
                 blog.BlogStatus = true;
-                blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                var userMail = User.Identity.Name;
-                var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
+                blog.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());               
                 blog.WriterId = writerId;
                 blogManager.Add(blog);
                 return RedirectToAction("BlogListByWriter", "Blog");
@@ -110,7 +112,8 @@ namespace MvcWebUI.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog blog)
         {
-            var userMail = User.Identity.Name;
+            var userName = User.Identity.Name;
+            var userMail = context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
             var writerId = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterId).FirstOrDefault();
             blog.WriterId = writerId;
             blog.BlogStatus = true;
