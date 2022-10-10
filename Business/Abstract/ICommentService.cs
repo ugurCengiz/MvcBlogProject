@@ -11,5 +11,7 @@ namespace Business.Abstract
     {
        
         List<Comment> GetList(int id);
+        List<Comment> GetCommentWithBlog();
+
     }
 }

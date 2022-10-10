@@ -40,12 +40,17 @@ namespace Business.Concrete
 
         public Comment GetById(int id)
         {
-            throw new NotImplementedException();
+            return _commentDal.GetById(id);
         }
 
         public List<Comment> GetList()
         {
             return _commentDal.GetListAll();
+        }
+
+        public List<Comment> GetCommentWithBlog()
+        {
+            return _commentDal.GetListWithBlog();
         }
     }
 }

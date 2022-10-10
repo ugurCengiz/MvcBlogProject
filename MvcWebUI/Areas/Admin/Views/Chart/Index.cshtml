@@ -18,21 +18,23 @@
             $.ajax({
                 type: 'GET',
                 url: '/Admin/Chart/CategoryChart',
-                success: function (chartsdata) {
-                    var Data = chartsdata.jsonlist;
-                    var data = new google.visualization.DataTable();
-                    data.addColumn('string', 'CategoryName');
-                    data.addColumn('number', 'CategoryCount');
-                    for (var i = 0; i < Data.length; i++) {
-                        data.addRow([Data[i].CategoryName, Data[i].CategoryCount]);
-                    }
+                success: function (chartsdata) 
+                {
+                        var Data = chartsdata.jsonlist;
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'CategoryName');
+                        data.addColumn('number', 'CategoryCount');
+                        for (var i = 0; i < Data.length; i++) 
+                        {
+                            data.addRow([Data[i].CategoryName, Data[i].CategoryCount]);
+                        }
                     var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
                     chart.draw(data,
-                        {
+                    {
                             title: "Google Chart Core Projesi",
                             position: "top",
                             fontsize: "16px"
-                        });
+                    });
                 }
             });
         });
